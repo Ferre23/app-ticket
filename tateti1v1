@@ -1,0 +1,70 @@
+def imprimir_tablero(tablero):
+ 
+    print("\n     |     |")
+    print(f"  {tablero[0]}  |  {tablero[1]}  |  {tablero[2]}")
+    print("_____|_____|_____")
+    print("     |     |")
+    print(f"  {tablero[3]}  |  {tablero[4]}  |  {tablero[5]}")
+    print("_____|_____|_____")
+    print("     |     |")
+    print(f"  {tablero[6]}  |  {tablero[7]}  |  {tablero[8]}")
+    print("     |     |")
+
+
+def verificar_ganador(tablero, jugador):
+    lineas_ganadoras = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+        [0, 4, 8], [2, 4, 6]             
+    ]
+    for linea in lineas_ganadoras:
+        if tablero[linea[0]] == jugador and tablero[linea[1]] == jugador and tablero[linea[2]] == jugador:
+            return True
+    return False
+
+
+def verificar_empate(tablero):
+    return " " not in tablero
+
+
+def jugar_partida():
+    tablero = [" "] * 9
+    jugador_actual = "X"
+    juego_terminado = False
+
+    print("--- ¡Bienvenido al Ta-Te-Ti! ---")
+    print("Los jugadores elegirán una casilla del 1 al 9.")
+    imprimir_tablero([str(i) for i in range(1, 10)]) 
+
+    while not juego_terminado:
+        print(f"\nTurno del Jugador '{jugador_actual}'")
+        
+        while True:
+            try:
+                movimiento = int(input("Elige una casilla (1-9): "))
+                if 1 <= movimiento <= 9:
+                    indice = movimiento - 1
+                    if tablero[indice] == " ":
+                        tablero[indice] = jugador_actual
+                        break
+                    else:
+                        print("❌ Casilla ocupada. Intenta de nuevo.")
+                else:
+                    print("❌ Número fuera de rango. Elige entre 1 y 9.")
+            except ValueError:
+                print("❌ Entrada inválida. Por favor, ingresa un número.")
+        
+        imprimir_tablero(tablero)
+        
+        if verificar_ganador(tablero, jugador_actual):
+            print(f"\n¡Felicidades! ¡El Jugador '{jugador_actual}' ha ganado! 🥳")
+            juego_terminado = True
+        elif verificar_empate(tablero):
+            print("\n¡El juego ha terminado en empate! 🤝")
+            juego_terminado = True
+        else:
+            jugador_actual = "O" if jugador_actual == "X" else "X"
+
+
+if __name__ == "__main__":
+    jugar_partida()
