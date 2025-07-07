@@ -2,64 +2,37 @@ import random
 import string
 
 def generar_contrasena(longitud):
-    """
-    Genera una contraseña segura de una longitud específica.
-
-    La contraseña generada contendrá al menos una letra mayúscula, una minúscula,
-    un número y un símbolo para asegurar su fortaleza.
-
-    Args:
-        longitud (int): La longitud deseada para la contraseña.
-
-    Returns:
-        str: La contraseña generada.
-    """
-    # Define los conjuntos de caracteres a utilizar
     letras_mayusculas = string.ascii_uppercase
     letras_minusculas = string.ascii_lowercase
     numeros = string.digits
     simbolos = string.punctuation
 
-    # Asegura que la contraseña contenga al menos un caracter de cada tipo
     contrasena_lista = [
         random.choice(letras_mayusculas),
         random.choice(letras_minusculas),
         random.choice(numeros),
         random.choice(simbolos)
     ]
-
-    # Rellena el resto de la contraseña con una mezcla de todos los caracteres
     caracteres_todos = letras_mayusculas + letras_minusculas + numeros + simbolos
     longitud_restante = longitud - 4
-    
     for _ in range(longitud_restante):
         contrasena_lista.append(random.choice(caracteres_todos))
-
-    # Mezcla todos los caracteres para que la posición sea aleatoria
     random.shuffle(contrasena_lista)
-
-    # Convierte la lista de caracteres en una cadena de texto y la devuelve
     return "".join(contrasena_lista)
-
 if __name__ == "__main__":
     print("--- GENERADOR DE CONTRASEÑAS SEGURAS ---")
-
     while True:
         try:
             longitud_deseada = int(input("Ingresa la longitud deseada para la contraseña (mínimo 8): "))
             
-            # Se recomienda una longitud mínima para una contraseña segura
             if longitud_deseada < 8:
                 print("❌ Error: Para una contraseña segura, la longitud debe ser de al menos 8 caracteres.")
             else:
-                break # Sale del bucle si la entrada es válida
-                
+                break 
         except ValueError:
             print("❌ Error: Por favor, ingresa solo un número entero.")
 
-    # Genera la contraseña llamando a la función
     contrasena_generada = generar_contrasena(longitud_deseada)
 
-    # Muestra la contraseña final al usuario
     print(f"\n✅ ¡Contraseña generada con éxito!")
     print(f"   Tu nueva contraseña segura es: {contrasena_generada}")
